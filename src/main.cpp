@@ -1,57 +1,23 @@
 #include "raylib.h"
 #include <iostream>
-
-class Cub{
-   public:
-    int x = 100;
-	int y = 100;
-   
-   void cubMiscare(){
-	  if(IsKeyDown(KEY_LEFT_SHIFT)){
-	  if(IsKeyDown(KEY_W)) y = y - 5;
-	  if(IsKeyDown(KEY_S)) y = y + 5;
-	  if(IsKeyDown(KEY_A)) x = x - 5;
-	  if(IsKeyDown(KEY_D)) x = x + 5;
-	}
-	
-	else{
-      if(IsKeyDown(KEY_W)) y = y - 3;
-	  if(IsKeyDown(KEY_S)) y = y + 3;
-	  if(IsKeyDown(KEY_A)) x = x - 3;
-	  if(IsKeyDown(KEY_D)) x = x + 3;
-
-	}
-   }
-
-   void cubDraw(){
-	 DrawCircle(x, y, 40, BLACK);
-   }
-};
-
-class Enemy{
-   public:
-    int x;
-	int y;
-
-   Enemy(int poz_X, int poz_Y){
-     x = poz_X;
-	 y = poz_Y;
-   }
-   
-   void draw(){
-	 DrawRectangle(x, y, 30, 70, BLUE);
-   }
-};
+#include "Player.h"
+#include "Enemy.h"
 
 int main(){
 	bool isPaused = false;
 	
 	InitWindow(1600, 900, "ColiderBuilding");
-	SetTargetFPS(60);
+	SetTargetFPS(240);
     Cub cu;
-	Enemy en(200, 400);
+	Enemy en1(200, 400, true);
+	Enemy en2(500, 400, true);
+	Enemy en3(800, 400, true);
 	
 	while(!WindowShouldClose()){
+		en1.rotation1 += 1.0f;
+		en2.rotation1 += -1.0f;
+		en3.rotation1 += 1.0f;
+
 		if(IsKeyDown(KEY_E)){
             isPaused = !isPaused;
 		}
@@ -64,11 +30,12 @@ int main(){
 		else{
           cu.cubMiscare();
 		  cu.cubDraw();
-		  en.draw();
+		  en1.draw();
+		  en2.draw();
+		  en3.draw();
 		}
 		EndDrawing();
 	}
 	CloseWindow();
 	return 0;
 }
-
