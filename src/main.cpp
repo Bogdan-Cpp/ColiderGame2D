@@ -4,35 +4,31 @@
 #include "Enemy.h"
 
 int main(){
-	bool isPaused = false;
+	bool isPaused;
 	
 	InitWindow(1600, 900, "ColiderBuilding");
 	SetTargetFPS(240);
     Cub cu;
-	Enemy en1(200, 400, true);
-	Enemy en2(500, 400, true);
-	Enemy en3(800, 400, true);
+	Rotator rot(750, 400, true);
+	badFood bdf(5, 100, 300);
 	
 	while(!WindowShouldClose()){
-		en1.rotation1 += 1.0f;
-		en2.rotation1 += -1.0f;
-		en3.rotation1 += 1.0f;
+		rot.rotation1 += 1.0f;
 
 		if(IsKeyDown(KEY_E)){
             isPaused = !isPaused;
 		}
 		BeginDrawing();
 
-		ClearBackground(WHITE);
+		ClearBackground(BLACK);
 		if(isPaused){
-			DrawText("Press key E to resume the game", 300, 300, 60, BLACK);
+			DrawText("Press key E to resume the game", 300, 300, 60, WHITE);
 		}
 		else{
           cu.cubMiscare();
+		  bdf.draw();
 		  cu.cubDraw();
-		  en1.draw();
-		  en2.draw();
-		  en3.draw();
+		  rot.draw();
 		}
 		EndDrawing();
 	}

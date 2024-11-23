@@ -21,6 +21,6 @@ class Cub{
 
    void cubDraw(){
 	std::cout << x << " " << y << '\n';
-	 DrawCircle(x, y, 40, BLACK);
+	 DrawCircle(x, y, 40, YELLOW);
    }
 };
