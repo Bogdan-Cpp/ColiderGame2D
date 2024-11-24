@@ -4,11 +4,12 @@
 #include "Enemy.h"
 
 void start();
-void collisionCheck(badFood *&bdf, Cub *cu);
+void badFod_collision(badFood *&bdf, Cub *cu);
+void Rotator_collision(Cub *cu, Rotator *rot, bool &isRestarted);
 
 int main(){
 	InitWindow(1600, 900, "ColiderBuilding");
-	SetTargetFPS(240);
+	SetTargetFPS(60);
     start();
 	CloseWindow();
 	return 0;
@@ -16,6 +17,7 @@ int main(){
 
 void start(){
 	bool isPaused= false;
+	bool isRestarted = false;
     Cub *cu = new Cub;
 	Rotator *rot = new Rotator(750, 400);
 	badFood *bdf = new badFood(5, 100, 300);
@@ -23,19 +25,28 @@ void start(){
 	while(!WindowShouldClose()){
 		rot->rotation1 += 1.0f;
         //collision
-        collisionCheck(bdf, cu);
+        badFod_collision(bdf, cu);
+        Rotator_collision(cu, rot, isRestarted);
 
         if(cu->x > 1620 || cu->x < -20 || cu->y > 920) {
-			delete cu;
-			delete rot;
-			delete bdf;
-			cu = new Cub;
-			rot = new Rotator(750, 400);
-			bdf = new badFood(5, 100, 300);
-			isPaused = false;
+			isRestarted = true;
 		}
+		
 		if(IsKeyPressed(KEY_E)){isPaused = !isPaused;}
+		
+		if(isRestarted){
+           delete cu;
+		   delete rot;
+		   delete bdf;
 
+		   cu = new Cub;
+		   rot = new Rotator(750, 400);
+		   bdf = new badFood(5, 100, 300);
+
+		   isPaused = false;
+		   isRestarted = false;
+		}
+		
 		BeginDrawing();
         
         ClearBackground(BLACK);
@@ -59,10 +70,18 @@ void start(){
     delete bdf;
 }
 
-void collisionCheck(badFood *&bdf, Cub *cu){
+void badFod_collision(badFood *&bdf, Cub *cu){
 	if(bdf != nullptr && CheckCollisionCircles(cu->circle2, cu->r2, bdf->cerc1, bdf->r1)){
 		cu->r2 += 3;
 		delete bdf;
 		bdf = nullptr;
+		std::cout << "234";
+	}
+}
+
+void Rotator_collision(Cub *cu, Rotator *rot, bool &isRestarted){
+    if(CheckCollisionCircleRec(cu->circle2, cu->r2, rot->prop)){
+	   isRestarted = true;
+	   std::cout << "collision";
 	}
 }
