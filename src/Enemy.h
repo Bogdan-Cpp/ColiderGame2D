@@ -7,12 +7,10 @@ class Rotator{
     float rotation1 = 0.0f;
     int x;
 	 int y;
-	 bool r;
 
-   Rotator(int poz_X, int poz_Y, bool isLeft){
+   Rotator(int poz_X, int poz_Y){
      x = poz_X;
 	  y = poz_Y;
-	  r = isLeft;
 
      prop = {static_cast<float>(x), static_cast<float>(y), 20, 500};
      org = {prop.width / 2, prop.height / 2};

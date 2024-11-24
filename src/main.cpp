@@ -4,6 +4,7 @@
 #include "Enemy.h"
 
 void start();
+void collisionCheck(badFood *&bdf, Cub *cu);
 
 int main(){
 	InitWindow(1600, 900, "ColiderBuilding");
@@ -16,25 +17,20 @@ int main(){
 void start(){
 	bool isPaused= false;
     Cub *cu = new Cub;
-	Rotator *rot = new Rotator(750, 400, true);
+	Rotator *rot = new Rotator(750, 400);
 	badFood *bdf = new badFood(5, 100, 300);
 
 	while(!WindowShouldClose()){
 		rot->rotation1 += 1.0f;
         //collision
-		
-        if(bdf != nullptr && CheckCollisionCircles(cu->circle2, cu->r2, bdf->cerc1, bdf->r1)){
-			cu->r2 += 3;
-			delete bdf;
-			bdf = nullptr;
-		}
+        collisionCheck(bdf, cu);
 
         if(cu->x > 1620 || cu->x < -20 || cu->y > 920) {
 			delete cu;
 			delete rot;
 			delete bdf;
 			cu = new Cub;
-			rot = new Rotator(750, 400, true);
+			rot = new Rotator(750, 400);
 			bdf = new badFood(5, 100, 300);
 			isPaused = false;
 		}
@@ -60,5 +56,13 @@ void start(){
 	}
 	delete cu;
 	delete rot;
-	delete bdf;
+    delete bdf;
+}
+
+void collisionCheck(badFood *&bdf, Cub *cu){
+	if(bdf != nullptr && CheckCollisionCircles(cu->circle2, cu->r2, bdf->cerc1, bdf->r1)){
+		cu->r2 += 3;
+		delete bdf;
+		bdf = nullptr;
+	}
 }
