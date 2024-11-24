@@ -1,7 +1,9 @@
 class Cub{
    public:
-    int x = 730;
-	int y = 859;
+    float x = 730;
+	float y = 859;
+	Vector2 circle2 = {x, y};
+	int r2 = 40.0f;
    
    void cubMiscare(){
 	  if(IsKeyDown(KEY_Q)){
@@ -17,9 +19,10 @@ class Cub{
 	  if(IsKeyDown(KEY_A)) x = x - 3;
 	  if(IsKeyDown(KEY_D)) x = x + 3;
 	}
+	circle2 = {x, y};
    }
 
    void cubDraw(){
-	 DrawCircle(x, y, 40, YELLOW);
+	 DrawCircleV(circle2, r2, YELLOW);
    }
 };

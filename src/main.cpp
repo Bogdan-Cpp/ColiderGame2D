@@ -14,38 +14,49 @@ int main(){
 }
 
 void start(){
-	bool isPaused;
+	bool isPaused= false;
     Cub *cu = new Cub;
 	Rotator *rot = new Rotator(750, 400, true);
 	badFood *bdf = new badFood(5, 100, 300);
 
 	while(!WindowShouldClose()){
-		
 		rot->rotation1 += 1.0f;
-		if(IsKeyDown(KEY_E)){isPaused = !isPaused;}
+        //collision
+		
+        if(bdf != nullptr && CheckCollisionCircles(cu->circle2, cu->r2, bdf->cerc1, bdf->r1)){
+			cu->r2 += 3;
+			delete bdf;
+			bdf = nullptr;
+		}
 
-		BeginDrawing();
         if(cu->x > 1620 || cu->x < -20 || cu->y > 920) {
-			start();
 			delete cu;
 			delete rot;
 			delete bdf;
+			cu = new Cub;
+			rot = new Rotator(750, 400, true);
+			bdf = new badFood(5, 100, 300);
+			isPaused = false;
 		}
-	    
-		else{
-          ClearBackground(BLACK);
-		  if(isPaused){
+		if(IsKeyPressed(KEY_E)){isPaused = !isPaused;}
+
+		BeginDrawing();
+        
+        ClearBackground(BLACK);
+
+		if(isPaused){
 			DrawText("Press key E to resume the game", 300, 300, 60, WHITE);
-		  }
+		}
 		 
-		  else{
+		else{
             cu->cubMiscare();
-		    bdf->draw();
 		    cu->cubDraw();
 		    rot->draw();
-		  }
-		 EndDrawing();
+			if(bdf != nullptr){
+				bdf->draw();
+			}
 		}
+		EndDrawing();
 	}
 	delete cu;
 	delete rot;

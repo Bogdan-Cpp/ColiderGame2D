@@ -6,8 +6,8 @@ class Rotator{
     Vector2 org;
     float rotation1 = 0.0f;
     int x;
-	int y;
-	bool r;
+	 int y;
+	 bool r;
 
    Rotator(int poz_X, int poz_Y, bool isLeft){
      x = poz_X;
@@ -25,17 +25,19 @@ class Rotator{
 
 class badFood{
    public:
-      int raza;
-      int x;
-      int y;
+      float x;
+      float y;
+      Vector2 cerc1 {x, y};
+      int r1 = 6.0f;
 
-   badFood(int r, int poz_X, int poz_Y){
-      raza = r;
+   badFood(int raza, float poz_X, float poz_Y){
+      r1 = raza;
       x = poz_X;
       y = poz_Y;
+      cerc1 = {x, y};
    }
 
    void draw(){
-      DrawCircle(x, y, raza, ORANGE);
+      DrawCircleV(cerc1, r1, ORANGE);
    }
 };
