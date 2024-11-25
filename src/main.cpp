@@ -19,14 +19,13 @@ void start(){
 	bool isPaused= false;
 	bool isRestarted = false;
     Cub *cu = new Cub;
-	Rotator *rot = new Rotator(750, 400);
+	Rotator *rot = new Rotator(750, 400, 500, 30);
 	badFood *bdf = new badFood(5, 100, 300);
 
 	while(!WindowShouldClose()){
-		rot->rotation1 += 1.0f;
         //collision
         badFod_collision(bdf, cu);
-        Rotator_collision(cu, rot, isRestarted);
+		Rotator_collision(cu, rot, isRestarted);
 
         if(cu->x > 1620 || cu->x < -20 || cu->y > 920) {
 			isRestarted = true;
@@ -40,7 +39,7 @@ void start(){
 		   delete bdf;
 
 		   cu = new Cub;
-		   rot = new Rotator(750, 400);
+		   rot = new Rotator(750, 400, 500, 30);
 		   bdf = new badFood(5, 100, 300);
 
 		   isPaused = false;
@@ -81,7 +80,6 @@ void badFod_collision(badFood *&bdf, Cub *cu){
 
 void Rotator_collision(Cub *cu, Rotator *rot, bool &isRestarted){
     if(CheckCollisionCircleRec(cu->circle2, cu->r2, rot->prop)){
-	   isRestarted = true;
-	   std::cout << "collision";
+		isRestarted = true;
 	}
 }

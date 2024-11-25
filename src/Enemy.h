@@ -3,21 +3,21 @@
 class Rotator{
    public:
     Rectangle prop;
-    Vector2 org;
-    float rotation1 = 0.0f;
     int x;
 	 int y;
+    int w;
+    int h;
 
-   Rotator(int poz_X, int poz_Y){
+   Rotator(int poz_X, int poz_Y, int width, int height){
      x = poz_X;
 	  y = poz_Y;
-
-     prop = {static_cast<float>(x), static_cast<float>(y), 20, 500};
-     org = {prop.width / 2, prop.height / 2};
+     w = width;
+     h = height;
+     prop = {static_cast<float>(x), static_cast<float>(y), static_cast<float>(w), static_cast<float>(h)};
    }
 
    void draw(){
-	 DrawRectanglePro(prop, org, rotation1, BLUE);
+	  DrawRectangle(x, y, w, h, BLUE);
    }
 };
 
