@@ -39,3 +39,22 @@ class badFood{
       DrawCircleV(cerc1, r1, ORANGE);
    }
 };
+
+class goodFood{
+   public:
+      float x;
+      float y;
+      Vector2 circle = {x, y};
+      int r;
+   
+   goodFood(float poz_X, float poz_Y, int raza){
+      x = poz_X;
+      y = poz_Y;
+      r = raza;
+      circle = {static_cast<float>(x), static_cast<float>(y)}; 
+   }
+
+   void draw(){
+      DrawCircleV(circle, r, GREEN);
+   }
+};

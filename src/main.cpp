@@ -6,6 +6,7 @@
 void start();
 void badFod_collision(badFood *&bdf, Cub *cu);
 void Rotator_collision(Cub *cu, Rotator *rot, bool &isRestarted);
+void goodFood_collision(Cub *cu, goodFood *&gdf);
 
 int main(){
 	InitWindow(1600, 900, "ColiderBuilding");
@@ -21,11 +22,14 @@ void start(){
     Cub *cu = new Cub;
 	Rotator *rot = new Rotator(750, 400, 500, 30);
 	badFood *bdf = new badFood(5, 100, 300);
+	goodFood *gdf = new goodFood(50, 100, 7);
 
 	while(!WindowShouldClose()){
+		std::cout << cu->r2 << '\n';
         //collision
         badFod_collision(bdf, cu);
 		Rotator_collision(cu, rot, isRestarted);
+	    goodFood_collision(cu, gdf);
 
         if(cu->x > 1620 || cu->x < -20 || cu->y > 920) {
 			isRestarted = true;
@@ -37,10 +41,12 @@ void start(){
            delete cu;
 		   delete rot;
 		   delete bdf;
+		   delete gdf;
 
 		   cu = new Cub;
 		   rot = new Rotator(750, 400, 500, 30);
 		   bdf = new badFood(5, 100, 300);
+		   gdf = new goodFood(50, 100, 7);
 
 		   isPaused = false;
 		   isRestarted = false;
@@ -58,6 +64,9 @@ void start(){
             cu->cubMiscare();
 		    cu->cubDraw();
 		    rot->draw();
+			if(gdf != nullptr){
+               gdf->draw();
+			}
 			if(bdf != nullptr){
 				bdf->draw();
 			}
@@ -67,6 +76,7 @@ void start(){
 	delete cu;
 	delete rot;
     delete bdf;
+	delete gdf;
 }
 
 void badFod_collision(badFood *&bdf, Cub *cu){
@@ -74,7 +84,17 @@ void badFod_collision(badFood *&bdf, Cub *cu){
 		cu->r2 += 3;
 		delete bdf;
 		bdf = nullptr;
-		std::cout << "234";
+	}
+}
+
+void goodFood_collision(Cub *cu, goodFood *&gdf){
+	if(gdf != nullptr && CheckCollisionCircles(cu->circle2, cu->r2, gdf->circle, gdf->r)){
+		if(cu->r2 <= 20.0f){cu->r2 += 0;}
+		if(cu->r2 == 21.0f){cu->r2 -= 1;}
+		if(cu->r2 > 21){cu->r2 -= 2;}
+		
+		delete gdf;
+		gdf = nullptr;
 	}
 }
 

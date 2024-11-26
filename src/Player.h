@@ -3,7 +3,7 @@ class Cub{
     float x = 730;
 	float y = 859;
 	Vector2 circle2 = {x, y};
-	int r2 = 27.0f;
+	int r2 = 21.0f;
    
    void cubMiscare(){
       y = y - 3;
