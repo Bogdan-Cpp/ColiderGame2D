@@ -7,9 +7,8 @@ class Cub{
    
    void cubMiscare(){
       y = y - 3;
-	  if(IsKeyDown(KEY_S)) y = y + 10;
-	  if(IsKeyDown(KEY_A)) x = x - 15;
-	  if(IsKeyDown(KEY_D)) x = x + 15;
+	  if(IsKeyDown(KEY_A)) x = x - 1000 * GetFrameTime();
+	  if(IsKeyDown(KEY_D)) x = x + 1000 * GetFrameTime();
 	
 	circle2 = {x, y};
    }

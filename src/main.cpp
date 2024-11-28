@@ -19,12 +19,20 @@ int main(){
 void start(){
 	bool isPaused= false;
 	bool isRestarted = false;
+
     Cub *cu = new Cub;
 	Rotator *rot = new Rotator(750, 400, 500, 30);
 	badFood *bdf = new badFood(5, 100, 300);
 	goodFood *gdf = new goodFood(50, 100, 7);
+    
+    Camera2D camera;
+	camera.target = cu->circle2;
+	camera.offset = {1600 / 2, 900 / 2};
+	camera.rotation = 0.0f;
+	camera.zoom = 1.0f;
 
 	while(!WindowShouldClose()){
+		camera.target = {camera.target.x, cu->circle2.y};
 		std::cout << cu->r2 << '\n';
         //collision
         badFod_collision(bdf, cu);
@@ -61,6 +69,7 @@ void start(){
 		}
 		 
 		else{
+			BeginMode2D(camera);
             cu->cubMiscare();
 		    cu->cubDraw();
 		    rot->draw();
@@ -70,6 +79,7 @@ void start(){
 			if(bdf != nullptr){
 				bdf->draw();
 			}
+			EndMode2D();
 		}
 		EndDrawing();
 	}
